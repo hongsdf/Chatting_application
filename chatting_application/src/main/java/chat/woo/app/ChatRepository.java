@@ -14,4 +14,10 @@ public interface ChatRepository extends ReactiveMongoRepository<Chat,String> { /
     // response를 유지하면서 데이터를 계속 흘려보내기
     // 흐름을 중단할때까지 계속 유지
 
+
+
+    @Tailable // 커서를 안닫고 계속유지한다. => 요청1에 대해 응답결과 중 요청2가 데이터를 수정하면 요청1에 데이터도 수정된 데이터를 받는다. => 프로토콜 SSE을 사용
+    @Query("{roomNumber:?0}")
+    Flux<Chat> RoomFind(Integer roomNumber); // FLUX : 흐름
+
 }
